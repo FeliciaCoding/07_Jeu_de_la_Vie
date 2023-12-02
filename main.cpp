@@ -14,6 +14,8 @@ using namespace std;
 const int GAME_ROW = 9;
 const int GAME_COL = 9;
 
+
+
 void printGrid(int grid[][GAME_COL]) {
     // print column indice
     const int WIDE_ELEMENT = 3;
@@ -35,17 +37,23 @@ void printGrid(int grid[][GAME_COL]) {
     cout << endl;
 }
 
-
+// Conway's Game of Life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+// live: x < 2, die
+// x = 2 or x = 3, live
+// x > 3 , die
+// die : x = 3, live
 // returns the count of alive neighbours
-int count_live_neighbour_cell(int a[GAME_ROW][GAME_COL], int r, int c) {
+
+
+int countLiveNeighbourCell(int currentGrid[GAME_ROW][GAME_COL], int row, int col) {
     int i, j, count = 0;
-    for (i = r - 1; i <= r + 1; i++) {
-        for (j = c - 1; j <= c + 1; j++) {
-            if ((i == r && j == c) || (i < 0 || j < 0)
+    for (i = row - 1; i <= row + 1; i++) {
+        for (j = col - 1; j <= col + 1; j++) {
+            if ((i == row && j == col) || (i < 0 || j < 0)
                 || (i >= GAME_ROW || j >= GAME_COL)) {
                 continue;
             }
-            if (a[i][j] == 1) {
+            if (currentGrid[i][j] == 1) {
                 count++;
             }
         }
@@ -55,21 +63,21 @@ int count_live_neighbour_cell(int a[GAME_ROW][GAME_COL], int r, int c) {
 
 int main() {
 
-    // TODO : Introduction message (This program... )
+    // TODO : writeIntroduction function
+    cout << "This program is an implementation of Conway's Game of Life which is a cellular automaton devised by the British mathematician John Horton Conway in 1970." << endl;
 
     int currentGrid[GAME_ROW][GAME_COL], nextGrid[GAME_ROW][GAME_COL];
     int i, j;
     int neighbour_live_cell;
 
-    // generate matrix canvas with random values (live and
-    // dead cells)
+    // TODO : generateRandomGrid function
     for (i = 0; i < GAME_ROW; i++) {
         for (j = 0; j < GAME_COL; j++) {
             currentGrid[i][j] = rand() % 2;
         }
     }
 
-// TODO : printTitles Funcitons
+    // TODO : printTitles Funcitons
     const int    GAME_WIDTH      = 30;
     const char   TITLE_SEPERATOR = '-';
     const char   SPACE           = ' ';
@@ -92,11 +100,11 @@ int main() {
         cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
     }
 
-    // next canvas values based on live neighbour count
+    // TODO : determineNextGrid function
     for (i = 0; i < GAME_ROW; i++) {
         for (j = 0; j < GAME_COL; j++) {
             neighbour_live_cell
-                    = count_live_neighbour_cell(currentGrid, i, j);
+                    = countLiveNeighbourCell(currentGrid, i, j);
             if (currentGrid[i][j] == 1
                 && (neighbour_live_cell == 2
                     || neighbour_live_cell == 3)) {

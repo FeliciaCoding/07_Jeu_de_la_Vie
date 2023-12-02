@@ -14,6 +14,38 @@ using namespace std;
 const int GAME_ROW = 9;
 const int GAME_COL = 9;
 
+void printIntroduction() {
+    cout << "This program is a C++ implementation of Conway's Game of Life\n"
+            "which is a cellular automaton devised by "
+            "the British mathematician John Horton Conway in 1970.\n\n";
+}
+
+
+const int  GAME_WIDTH      = 30;
+const char TITLE_SEPERATOR = '-';
+
+void printLineOfDashes() {
+    cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
+}
+
+
+const char   SPACE           = ' ';
+const string TITLE           = "GENRATION NO ";
+const int    NUM_GENERATIONS = 6;  // TODO : Set back to 6 once the buffer grid is created
+
+static int gen = 0;
+
+void printGenerationTitle() {
+    if (gen <= NUM_GENERATIONS) {
+        system(CLEAR_SCREEN);
+        printLineOfDashes();
+        cout << setw(9) << setfill(SPACE) << "" << TITLE << gen << endl;
+        printLineOfDashes();
+        ++gen;
+    } else {
+        return;
+    }
+}
 
 
 void printGrid(int grid[][GAME_COL]) {
@@ -35,6 +67,15 @@ void printGrid(int grid[][GAME_COL]) {
         cout << endl;
     }
     cout << endl;
+}
+
+
+int generateRandomGrid(int currentGrid[GAME_ROW][GAME_COL]) {
+    for (int i = 0; i < GAME_ROW; i++) {
+        for (int j = 0; j < GAME_COL; j++) {
+            currentGrid[i][j] = rand() % 2;
+        }
+    }
 }
 
 // Conway's Game of Life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
@@ -61,48 +102,11 @@ int countLiveNeighbourCell(int currentGrid[GAME_ROW][GAME_COL], int row, int col
     return count;
 }
 
-int main() {
-
-    // TODO : writeIntroduction function
-    cout << "This program is an implementation of Conway's Game of Life which is a cellular automaton devised by the British mathematician John Horton Conway in 1970." << endl;
-
-    int currentGrid[GAME_ROW][GAME_COL], nextGrid[GAME_ROW][GAME_COL];
-    int i, j;
+int determineNextGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]) {
     int neighbour_live_cell;
 
-    // TODO : generateRandomGrid function
-    for (i = 0; i < GAME_ROW; i++) {
-        for (j = 0; j < GAME_COL; j++) {
-            currentGrid[i][j] = rand() % 2;
-        }
-    }
-
-    // TODO : printTitles Funcitons
-    const int    GAME_WIDTH      = 30;
-    const char   TITLE_SEPERATOR = '-';
-    const char   SPACE           = ' ';
-    const string TITLE           = "GENRATION NO ";
-    const int    NUM_GENERATIONS = 1;  // TODO : Set back to 6 once the buffer grid is created
-
-    system(CLEAR_SCREEN);
-    cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
-    cout << setw(9) << setfill(SPACE) << "" << TITLE << "0" << endl;
-    cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
-
-    printGrid(currentGrid);
-
-
-    // calculate the subsequent generations
-    for (int gen = 1; gen <= NUM_GENERATIONS; ++gen) {
-        system(CLEAR_SCREEN);
-        cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
-        cout << setw(9) << setfill(SPACE) << "" << TITLE << gen << endl;
-        cout << setw(GAME_WIDTH) << setfill(TITLE_SEPERATOR) << "" << endl;
-    }
-
-    // TODO : determineNextGrid function
-    for (i = 0; i < GAME_ROW; i++) {
-        for (j = 0; j < GAME_COL; j++) {
+    for (int i = 0; i < GAME_ROW; i++) {
+        for (int j = 0; j < GAME_COL; j++) {
             neighbour_live_cell
                     = countLiveNeighbourCell(currentGrid, i, j);
             if (currentGrid[i][j] == 1
@@ -117,8 +121,52 @@ int main() {
             }
         }
     }
+}
 
-    printGrid(nextGrid);
+void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]){
+    int tempGrid[GAME_ROW][GAME_COL];
 
-    return 0;
+    for (int i = 0; i < GAME_ROW; i++){
+        for (int j = 0; j < GAME_COL; j++){
+            tempGrid[i][j]=currentGrid[i][j];
+        }
+    }
+
+    for (int i = 0; i < GAME_ROW; i++){
+        for (int j = 0; j < GAME_COL; j++){
+            currentGrid[i][j]=nextGrid[i][j];
+        }
+    }
+
+    for (int i = 0; i < GAME_ROW; i++){
+        for (int j = 0; j < GAME_COL; j++){
+            nextGrid[i][j]=tempGrid[i][j];
+        }
+    }
+
+}
+
+int main() {
+
+    int currentGrid[GAME_ROW][GAME_COL], nextGrid[GAME_ROW][GAME_COL];
+
+    printIntroduction();
+
+    // TODO : startGameOfLive function
+    generateRandomGrid(currentGrid);
+
+    for (int i = 0; i <= NUM_GENERATIONS; ++i ){
+
+        printGenerationTitle();
+
+        printGrid(currentGrid);
+
+        determineNextGrid(currentGrid, nextGrid);
+
+        swapGrid(currentGrid, nextGrid);
+
+    }
+
+
+    return EXIT_SUCCESS;
 }

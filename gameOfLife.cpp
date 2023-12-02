@@ -1,6 +1,11 @@
+#include <string>
+#include <chrono>
+#include <thread>
+
 #include "gameOfLife.h"
 #include "IOconsole.h"
 
+using namespace std;
 
 void generateRandomGrid(int currentGrid[GAME_ROW][GAME_COL]) {
     for (int i = 0; i < GAME_ROW; i++) {
@@ -11,13 +16,6 @@ void generateRandomGrid(int currentGrid[GAME_ROW][GAME_COL]) {
 }
 
 // Conway's Game of Life: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
-// live: x < 2, die
-// x = 2 or x = 3, live
-// x > 3 , die
-// die : x = 3, live
-// returns the count of alive neighbours
-
-
 int countLiveNeighbourCell(int currentGrid[GAME_ROW][GAME_COL], int row, int col) {
     int i, j, count = 0;
     for (i = row - 1; i <= row + 1; i++) {
@@ -94,7 +92,13 @@ void runGameOfLife() {
 
         swapGrid(currentGrid, nextGrid);
 
+        // Assume buffer time 1000 milliseconds in order to see the changes between generations.
+        std::chrono::milliseconds timespan(1000);
+        std::this_thread::sleep_for(timespan);
+
     }
 
+    string endMessage = "End of the game.";
+    printEndMessage(endMessage);
 
 }

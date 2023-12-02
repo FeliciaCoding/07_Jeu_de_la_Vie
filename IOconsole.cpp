@@ -58,3 +58,7 @@ void printGrid(int grid[][GAME_COL]) {
     cout << endl;
 }
 
+void printEndMessage(string endMessage){
+    cout << endl <<  endMessage << endl;
+}
+

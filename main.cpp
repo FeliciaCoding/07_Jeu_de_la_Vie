@@ -6,6 +6,7 @@ using namespace std;
 
 int main() {
 
+    // should we put printIntroduction() in the function of runGameOfLife() ?
     printIntroduction();
 
     runGameOfLife();

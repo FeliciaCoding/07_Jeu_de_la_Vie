@@ -23,4 +23,6 @@ void printGenerationTitle();
 
 void printGrid(int grid[][GAME_COL]);
 
+void printEndMessage(std::string endMessage);
+
 #endif //INC_07_JEU_DE_LA_VIE_IOCONSOLE_H

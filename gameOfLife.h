@@ -11,6 +11,8 @@ void determineNextGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_RO
 
 void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
 
+bool hasNothingToEvaluate(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
+
 void runGameOfLife();
 
 #endif //INC_07_JEU_DE_LA_VIE_GAMEOFLIFE_H

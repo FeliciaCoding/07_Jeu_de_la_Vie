@@ -2,9 +2,11 @@
 #include "IOconsole.h"
 #include <iostream>
 #include <iomanip>
+#include <string_view>
 
 
 using namespace std;
+
 
 void printIntroduction() {
     cout << "This program is a C++ implementation of Conway's Game of Life\n"
@@ -25,7 +27,7 @@ const char        SPACE = ' ';
 static int        gen   = 0;
 
 void printGenerationTitle() {
-    if (gen <= NUM_GENERATIONS) {
+    if (gen <= MAX_NUM_OF_GENERATIONS) {
         system(CLEAR_SCREEN);
         printLineOfDashes();
         cout << setw(8) << setfill(SPACE) << "" << TITLE << gen << endl;
@@ -58,7 +60,7 @@ void printGrid(int grid[][GAME_COL]) {
     cout << endl;
 }
 
-void printEndMessage(string endMessage){
-    cout << endl <<  endMessage << endl;
+void printEndMessage(string_view endMessage) {
+    cout << endl << endMessage << endl;
 }
 

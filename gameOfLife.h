@@ -9,9 +9,9 @@ int countLiveNeighbourCell(int currentGrid[GAME_ROW][GAME_COL], int row, int col
 
 void determineNextGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
 
-void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
-
 bool hasNothingToEvaluate(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
+
+void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]);
 
 void runGameOfLife();
 

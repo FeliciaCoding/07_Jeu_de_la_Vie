@@ -53,6 +53,19 @@ void determineNextGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_RO
     }
 }
 
+bool hasNothingToEvaluate(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]) {
+
+    for (int i = 0; i < GAME_ROW; ++i) {
+        for (int j = 0; j < GAME_COL; ++j) {
+            if (currentGrid[i][j] != nextGrid[i][j]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
 void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]) {
     int tempGrid[GAME_ROW][GAME_COL];
 
@@ -76,18 +89,6 @@ void swapGrid(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_C
 
 }
 
-bool hasNothingToEvaluate(int currentGrid[GAME_ROW][GAME_COL], int nextGrid[GAME_ROW][GAME_COL]) {
-
-    for (int i = 0; i < GAME_ROW; ++i) {
-        for (int j = 0; j < GAME_COL; ++j) {
-            if (currentGrid[i][j] != nextGrid[i][j]) {
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
 
 int currentGrid[GAME_ROW][GAME_COL], nextGrid[GAME_ROW][GAME_COL];
 
@@ -103,15 +104,16 @@ void runGameOfLife() {
 
         determineNextGrid(currentGrid, nextGrid);
 
+        if (hasNothingToEvaluate(currentGrid, nextGrid) == true) {
+            break;
+        }
+
         swapGrid(currentGrid, nextGrid);
 
         // Assume buffer time 1000 milliseconds in order to see the changes between generations.
         std::chrono::milliseconds timespan(1000);
         std::this_thread::sleep_for(timespan);
 
-        if (hasNothingToEvaluate(currentGrid, nextGrid) == true) {
-            break;
-        }
     }
 
     string endMessage = "End of the game.";

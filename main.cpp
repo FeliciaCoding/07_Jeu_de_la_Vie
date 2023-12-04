@@ -1,15 +1,51 @@
+
+#include <iostream>
 #include <cstdlib>
-#include "IOconsole.h"
-#include "gameOfLife.h"
+#include <thread>
+
+#include "cellsLives.h"
+#include "display.h"
 
 using namespace std;
 
-int main() {
+int main()
+{
+  vector<vector<char>> grid = {
+      {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+      {'.', '.', '.', 'X', 'X', 'X', '.', '.', '.'},
+      {'.', '.', '.', '.', 'X', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', 'X', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', 'X', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', '.', '.', '.', '.', '.'},
+      {'.', '.', '.', '.', '.', '.', '.', '.', '.'}
+  };
 
-    // should we put printIntroduction() in the function of runGameOfLife() ?
-    printIntroduction();
+  int maxGenerations = 100;
+  int generation = 0;
 
-    runGameOfLife();
+  while (generation < maxGenerations) {
+    displayGeneration(grid, generation);
 
-    return EXIT_SUCCESS;
+    // Generate the next generation
+    vector<vector<char>> nextGeneration = grid;
+    generateNextGeneration(nextGeneration);
+
+    // Check for no change between generations
+    if (hasNoChange(grid, nextGeneration)) {
+      cout << "No more evolution. Stopping the program.\n";
+      break;
+    }
+
+    // Update the current generation
+    grid = nextGeneration;
+
+    // Pause for a short duration to visualize the changes
+    this_thread::sleep_for(chrono::milliseconds(500));
+
+    generation++;
+  }
+
+  return 0;
 }

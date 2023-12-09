@@ -94,6 +94,8 @@ int currentGrid[GAME_ROW][GAME_COL], nextGrid[GAME_ROW][GAME_COL];
 
 void runGameOfLife() {
 
+    printIntroduction();
+
     generateRandomGrid(currentGrid);
 
     for (int i = 0; i <= MAX_NUM_OF_GENERATIONS; ++i) {

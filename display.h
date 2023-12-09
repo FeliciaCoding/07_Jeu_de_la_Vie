@@ -1,5 +1,0 @@
-
-#ifndef INC_07_JEU_DE_LA_VIE__DISPLAY_H_
-#define INC_07_JEU_DE_LA_VIE__DISPLAY_H_
-
-#endif //INC_07_JEU_DE_LA_VIE__DISPLAY_H_

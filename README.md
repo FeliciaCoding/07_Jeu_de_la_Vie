@@ -1,5 +1,5 @@
-# 07_Jeu_de_la_Vie
-## Jeu de la Vie
+# Labo 07 - Jeu de la Vie
+
 
 ### Objectif
 - Présentation du code aussi propre que possible
